@@ -56,11 +56,11 @@ def compute_metrics_fn(eval_results, k, agg_method):
 
 # === CLI Arguments ===
 parser = argparse.ArgumentParser()
-parser.add_argument('--model_name_or_path', type=str, default="Qwen/Qwen2.5-Math-1.5B-Instruct")
-parser.add_argument('--prompt_type', type=str, default="qwen25-math-cot")
-parser.add_argument('--data_name', type=str, default="math")
+parser.add_argument('--model_name_or_path', type=str, default="tiiuae/falcon-7b-instruct")
+parser.add_argument('--prompt_type', type=str, default="falcon-math-cot")
+parser.add_argument('--data_name', type=str, default="college_math")
 parser.add_argument('--split', type=str, default="test")
-parser.add_argument('--output_dir', type=str, default="./outputs/qwen-math-vllm")
+parser.add_argument('--output_dir', type=str, default="./outputs/falcon_3_7b")
 parser.add_argument('--num_test_sample', type=int, default=0)
 parser.add_argument('--temperature', type=float, default=0.7)
 parser.add_argument('--top_p', type=float, default=0.8)

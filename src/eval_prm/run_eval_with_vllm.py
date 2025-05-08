@@ -56,7 +56,7 @@ def compute_metrics_fn(eval_results, k, agg_method):
 
 # === CLI Arguments ===
 parser = argparse.ArgumentParser()
-parser.add_argument('--model_name_or_path', type=str, default="tiiuae/falcon-7b-instruct")
+parser.add_argument('--model_name_or_path', type=str, default="tiiuae/Falcon3-7B-Base")
 parser.add_argument('--prompt_type', type=str, default="falcon-math-cot")
 parser.add_argument('--data_name', type=str, default="college_math")
 parser.add_argument('--split', type=str, default="test")
@@ -65,6 +65,8 @@ parser.add_argument('--num_test_sample', type=int, default=0)
 parser.add_argument('--temperature', type=float, default=0.7)
 parser.add_argument('--top_p', type=float, default=0.8)
 parser.add_argument('--save_outputs', action="store_true")
+parser.add_argument('--max_model_len', type=int, default=1024)
+parser.add_argument('--max_tokens', type=int, default=128)
 args = parser.parse_args()
 
 output_dir = os.path.abspath(args.output_dir)
@@ -83,13 +85,13 @@ print(f"[DEBUG] Available keys: {list(datasets[0].keys())}")
 sampling_params = SamplingParams(
     temperature=args.temperature,
     top_p=args.top_p,
-    max_tokens=512,
+    max_tokens=args.max_tokens,
     stop=[],
     use_beam_search=False
 )
 
 print(f"[INFO] Loading model: {args.model_name_or_path}")
-llm = LLM(model=args.model_name_or_path, dtype="float16")
+llm = LLM(model=args.model_name_or_path, dtype="float16", max_model_len=args.max_model_len)
 
 # === Generate responses ===
 generations = []
